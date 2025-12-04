@@ -4794,5 +4794,27 @@ GOLD
         return response()->json(['data' => $response]);
     }
 
+    /**
+     * @return void
+     */
+    public function getTempleListNavitimeTemple()
+    {
+
+        $response = [];
+
+        $result = DB::table('t_temple_list_navitime')->where('temple_lat_lng_id', '=', NULL)->get();
+
+        foreach($result as $v){
+            $response[] = [
+                'id' => $v->id,
+                'name' => $v->name,
+                'address' => $v->address,
+                'lat' => $v->lat,
+                'lng' => $v->lng,
+            ];
+        }
+
+        return response()->json(['data' => $response]);
+    }
 
 }

@@ -195,6 +195,7 @@ Route::namespace('Api')->group(function () {
     Route::post('tokyoJinjachouTempleList', 'ApiControllerSecond@tokyoJinjachouTempleList');
     Route::post('getComplementTempleVisitedDate', 'ApiControllerSecond@getComplementTempleVisitedDate');
     Route::post('insertTempleRank', 'ApiControllerSecond@insertTempleRank');
+    Route::post('getTempleListNavitimeTemple', 'ApiControllerSecond@getTempleListNavitimeTemple');
 
     //walk
     Route::post('getWalkRecord', 'ApiController@getWalkRecord');
