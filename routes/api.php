@@ -286,4 +286,13 @@ Route::namespace('Api')->group(function () {
     ///
     Route::post('getMetroStampPokePoke', 'ApiControllerThird@getMetroStampPokePoke');
 
+
+
+
+
+
+
+
+    Route::post('getGeolocReflection', 'ApiControllerReflection@getGeoloc');
+
 });
