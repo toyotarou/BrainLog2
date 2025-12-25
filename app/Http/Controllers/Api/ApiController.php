@@ -2448,6 +2448,22 @@ if(is_null($ex_val[4])){continue;}
         $ary2 = [];
         $last_tanka = 0;
 
+//==================================================//
+$totalGram = 0;
+$payPrice = 0;
+
+foreach($result as $v99){
+if(
+trim($v99->year) == date("Y") &&
+trim($v99->month) == date("m") &&
+trim($v99->day) == date("d")
+){}else{
+$totalGram += $v99->gram_num;
+$payPrice += $v99->gold_price;
+}
+}
+//==================================================//
+
         foreach ($result as $k => $v) {
             $ary = [];
             foreach ($midashi as $v2) {
@@ -2466,15 +2482,17 @@ if(is_null($ex_val[4])){continue;}
                         break;
                     case "gram_num":
                         $ary['gram_num'] = round($v->gram_num, 5);
-                        $sql = " select sum(gram_num) as total_gram, sum(gold_price) as pay_price from t_gold where id <= " . $v->id . "; ";
-                        $_total = DB::select($sql);
-                        $ary['total_gram'] = round($_total[0]->total_gram, 5);
 
-                        //
-                        $ary['gold_value'] = floor($v->gold_tanka * $_total[0]->total_gram);
+//                        $sql = " select sum(gram_num) as total_gram, sum(gold_price) as pay_price from t_gold where id <= " . $v->id . "; ";
+//                        $_total = DB::select($sql);
+//                        $ary['total_gram'] = round($_total[0]->total_gram, 5);
+//                        $ary['gold_value'] = floor($v->gold_tanka * $_total[0]->total_gram);
+//                        $ary['pay_price'] = $_total[0]->pay_price;
 
-                        //
-                        $ary['pay_price'] = $_total[0]->pay_price;
+                        $ary['total_gram'] = round($totalGram, 5);
+                        $ary['gold_value'] = floor($v->gold_tanka * $totalGram);
+                        $ary['pay_price'] = $payPrice;
+
                         break;
 
                     default:
