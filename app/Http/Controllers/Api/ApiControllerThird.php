@@ -1155,11 +1155,6 @@ DB::table('t_credit')
         return response()->json(['data' => $response]);
     }
 
-
-
-
-
-
                     ///
                     public function getBusTotalInfo()
                     {
@@ -1221,13 +1216,6 @@ DB::table('t_credit')
 
                     }
 
-
-
-
-
-
-
-
     ///
     public function getMetroStampPokePoke()
     {
@@ -1235,13 +1223,6 @@ DB::table('t_credit')
         $response = $result;
         return response()->json(['data' => $response]);
     }
-
-
-
-
-
-
-
 
     ///
     public function getPrefTrainStation()
@@ -1252,6 +1233,66 @@ DB::table('t_credit')
     }
 
 
+
+
+
+    ///
+    public function getAllMoneySum()
+    {
+        $result = DB::table('t_money')->
+            orderBy('year')->
+            orderBy('month')->
+            orderBy('day')->
+            get();
+
+        $ary = [];
+        foreach($result as $v){
+            $_yen10000 = (10000 * $v->yen_10000);
+            $_yen5000 = (5000 * $v->yen_5000);
+            $_yen2000 = (2000 * $v->yen_2000);
+            $_yen1000 = (1000 * $v->yen_1000);
+            $_yen500 = (500 * $v->yen_500);
+            $_yen100 = (100 * $v->yen_100);
+            $_yen50 = (50 * $v->yen_50);
+            $_yen10 = (10 * $v->yen_10);
+            $_yen5 = (5 * $v->yen_5);
+            $_yen1 = (1 * $v->yen_1);
+
+            $sum = (
+                $_yen10000 +
+                $_yen5000 +
+                $_yen2000 +
+                $_yen1000 +
+                $_yen500 +
+                $_yen100 +
+                $_yen50 +
+                $_yen10 +
+                $_yen5 +
+                $_yen1 +
+
+                $v->bank_a +
+                $v->bank_b +
+                $v->bank_c +
+                $v->bank_d +
+                $v->bank_e +
+
+                $v->pay_a +
+                $v->pay_b +
+                $v->pay_c +
+                $v->pay_d +
+                $v->pay_e +
+                $v->pay_f
+            );
+
+            $ary[] = [
+                "date"=>"{$v->year}-{$v->month}-{$v->day}",
+                "sum"=>$sum
+            ];
+        }
+
+        $response = $ary;
+        return response()->json(['data' => $response]);
+    }
 
 
 

@@ -2453,14 +2453,8 @@ $totalGram = 0;
 $payPrice = 0;
 
 foreach($result as $v99){
-if(
-trim($v99->year) == date("Y") &&
-trim($v99->month) == date("m") &&
-trim($v99->day) == date("d")
-){}else{
 $totalGram += $v99->gram_num;
 $payPrice += $v99->gold_price;
-}
 }
 //==================================================//
 
