@@ -15,6 +15,58 @@ class CreditSummaryInsert extends Command
     public function handle()
     {
 
+//===============================================//
+$str2 = "
+1	アメトーーククラブ
+2	ソフトバンク
+3	マイクロソフト
+4	任天堂
+5	テラサ
+6	AWS
+7	Hulu
+8	FOD
+9	ABEMA
+10	投資
+11	グーグルクラウド
+12	アドビ
+14	さくらインターネット
+15	グーグルプレイアップ
+16	テレビ東京
+17	ドコモ
+18	東京電力
+19	NTTコミュニケーション
+20	ユーネクスト
+21	データ便
+22	ネットフリックス
+23	paddle
+24	パラビ
+25	エイワスポーツジム
+26	chatgpt
+27	アーバンコーポレーション
+28	ユーチューブ
+29	NTTドコモビジネス
+30	chatgpt
+";
+
+
+$ex_str2 = explode("\n", $str2);
+
+$subscriptionItems = [];
+
+foreach ($ex_str2 as $k2 => $v2) {
+    if (trim($v2) == "") {
+        continue;
+    }
+
+    $ex_v2 = explode("\t", trim($v2));
+
+    $subscriptionItems[trim($ex_v2[1])] = "";
+}
+
+//===============================================//
+
+
+
 $str = "
 1381	2025-12	2025-12-05	334	2025-10-26	不明	NTTドコモビジネス	334
 1557	2025-12	2025-12-26	12473	2025-11-18	教育費	udemy	400
@@ -67,6 +119,8 @@ $str = "
                 $flag = false;
             }
 
+$subscription = (isset($subscriptionItems[trim($ex_v[6])]))? 1:0;
+
             $insert = [
                 "year" => $year,
                 "month" => $month,
@@ -74,7 +128,8 @@ $str = "
                 "use_date" => trim($ex_v[4]),
                 "item" => trim($ex_v[5]),
                 "detail" => trim($ex_v[6]),
-                "price" => trim($ex_v[7])
+                "price" => trim($ex_v[7]),
+                "subscription" => $subscription
             ];
 
 print_r($insert);
@@ -82,29 +137,6 @@ echo "\n\n";
 
             DB::table('t_credit_summary')->insert($insert);
         }
-
-
-
-
-/*
-
-
-create table t_credit_summary(
-id int primary key auto_increment,
-year text,
-month text,
-use_date text,
-item text,
-detail text,
-price int
-);
-
-
-
-*/
-
-
-
 
     }
 }
