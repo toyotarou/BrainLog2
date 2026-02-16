@@ -866,7 +866,8 @@ DB::table('t_credit')
                 "use_date" => $v->use_date,
                 "item" => $v->item,
                 "detail" => $v->detail,
-                "price" => $v->price
+                "price" => $v->price,
+                "subscription" => $v->subscription,
             ];
         }
 

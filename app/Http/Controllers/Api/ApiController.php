@@ -2430,9 +2430,10 @@ if(is_null($ex_val[4])){continue;}
         return response()->json(['data' => $response]);
     }
 
-    /**
-     *
-     */
+
+
+
+
     public function getgolddata()
     {
         $response = [];
@@ -2448,18 +2449,13 @@ if(is_null($ex_val[4])){continue;}
         $ary2 = [];
         $last_tanka = 0;
 
-//==================================================//
-$totalGram = 0;
-$payPrice = 0;
-
-foreach($result as $v99){
-$totalGram += $v99->gram_num;
-$payPrice += $v99->gold_price;
-}
-//==================================================//
+        // ★ ここで累計用を初期化（事前に全件合計しない）
+        $totalGram = 0;
+        $payPrice  = 0;
 
         foreach ($result as $k => $v) {
             $ary = [];
+
             foreach ($midashi as $v2) {
                 switch ($v2) {
                     case "gold_tanka":
@@ -2474,15 +2470,13 @@ $payPrice += $v99->gold_price;
                             $ary['diff'] = $diff;
                         }
                         break;
+
                     case "gram_num":
+                        // ★ この日の購入分を累計に加算（＝その日までの累計になる）
+                        $totalGram += $v->gram_num;
+                        $payPrice  += $v->gold_price;
+
                         $ary['gram_num'] = round($v->gram_num, 5);
-
-//                        $sql = " select sum(gram_num) as total_gram, sum(gold_price) as pay_price from t_gold where id <= " . $v->id . "; ";
-//                        $_total = DB::select($sql);
-//                        $ary['total_gram'] = round($_total[0]->total_gram, 5);
-//                        $ary['gold_value'] = floor($v->gold_tanka * $_total[0]->total_gram);
-//                        $ary['pay_price'] = $_total[0]->pay_price;
-
                         $ary['total_gram'] = round($totalGram, 5);
                         $ary['gold_value'] = floor($v->gold_tanka * $totalGram);
                         $ary['pay_price'] = $payPrice;
@@ -2495,17 +2489,13 @@ $payPrice += $v99->gold_price;
                 }
             }
 
-
             $ary2[$v->year . "-" . $v->month . "-" . $v->day] = $ary;
-
             $last_tanka = $v->gold_tanka;
-
         }
 
         $j = 0;
         $l = 0;
         for ($i = strtotime("2021-01-01"); $i <= strtotime(date("Y-m-d")); $i += 86400) {
-
 
             if (isset($ary2[date("Y-m-d", $i)])) {
                 if ($l == 0) {
@@ -2532,6 +2522,10 @@ $payPrice += $v99->gold_price;
 
         return response()->json(['data' => $response]);
     }
+
+
+
+
 
     /**
      *
