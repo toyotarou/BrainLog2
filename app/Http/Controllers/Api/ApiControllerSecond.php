@@ -4114,9 +4114,41 @@ GOLD
     }
 
     /**
-     * @param Request $request
-     * @return void
-     */
+    * @SWG\Post(
+    *   path="/getTokyoTrainStation",
+    *   summary="東京の路線と駅一覧を取得",
+    *   tags={"TokyoTrain"},
+    *   produces={"application/json"},
+    *   @SWG\Response(
+    *     response=200,
+    *     description="OK",
+    *     @SWG\Schema(
+    *       type="object",
+    *       @SWG\Property(
+    *         property="data",
+    *         type="array",
+    *         @SWG\Items(
+    *           type="object",
+    *           @SWG\Property(property="train_number", type="integer", example=0),
+    *           @SWG\Property(property="train_name", type="string", example="JR中央線"),
+    *           @SWG\Property(
+    *             property="station",
+    *             type="array",
+    *             @SWG\Items(
+    *               type="object",
+    *               @SWG\Property(property="id", type="string", example="0-1000005_1"),
+    *               @SWG\Property(property="station_name", type="string", example="東京"),
+    *               @SWG\Property(property="address", type="string", example=""),
+    *               @SWG\Property(property="lat", type="number", format="float", example=35.681391),
+    *               @SWG\Property(property="lng", type="number", format="float", example=139.766103)
+    *             )
+    *           )
+    *         )
+    *       )
+    *     )
+    *   )
+    * )
+    */
     public function getTokyoTrainStation(Request $request)
     {
 
@@ -4167,6 +4199,72 @@ GOLD
         return response()->json(['data' => $response]);
 
     }
+
+
+
+
+
+
+
+    public function getPrefTrainStation(Request $request)
+    {
+        //===============================// prefTrain
+        $url = 'https://express.heartrails.com/api/json?method=getLines&prefecture=' . urlencode($request->pref);
+        $jsonStr = $this->_getJsonStr($url);
+        $prefTrain = $jsonStr->response->line;
+        //===============================// prefTrain
+
+        $ary = [];
+        foreach($prefTrain as $k=>$v){
+            $url2 = "https://express.heartrails.com/api/json?method=getStations&line={$v}";
+            $jsonStr2 = $this->_getJsonStr($url2);
+
+            $keep_postal = [];
+
+            $ary2 = [];
+            $o=0;
+            foreach($jsonStr2->response->station as $v2){
+
+                $station_id = "{$k}-{$v2->postal}_1";
+
+                if(!empty($keep_postal[$v2->postal])){
+                    if(count($keep_postal[$v2->postal]) >= 1){
+                        $cnt = count($keep_postal[$v2->postal]) + 1;
+                        $station_id = "{$k}-{$v2->postal}_{$cnt}";
+                    }
+                }
+
+                $ary2[] = [
+                    "id" => $station_id,
+                    "station_name" => $v2->name,
+                    "address" => '',
+                    "lat" => $v2->y,
+                    "lng" => $v2->x,
+                    "order"=>$o
+                ];
+
+                $keep_postal[$v2->postal][] = '';
+
+                $o++;
+            }
+
+            $ary[] = [
+                "train_number" => $k,
+                "train_name" => $v,
+                "station" => $ary2
+            ];
+        }
+
+        $response = $ary;
+        return response()->json(['data' => $response]);
+    }
+
+
+
+
+
+
+
 
     /**
      *

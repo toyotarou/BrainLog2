@@ -254,7 +254,7 @@ Route::namespace('Api')->group(function () {
     Route::post('getPrefectureTrainCompany', 'ApiControllerThird@getPrefectureTrainCompany');
     Route::post('getTokyoBorderGeoloc', 'ApiControllerThird@getTokyoBorderGeoloc');
     Route::post('getPrefTrainStation', 'ApiControllerThird@getPrefTrainStation');
-
+    Route::post('getPrefTrainStation', 'ApiControllerSecond@getPrefTrainStation');
 
     // park
     Route::post('getMetropolitanPark', 'ApiControllerSecond@getMetropolitanPark');

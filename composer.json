@@ -7,13 +7,15 @@
     "require": {
         "php": "^7.2.5|^8.0",
         "barryvdh/laravel-cors": "^0.11.0",
+        "darkaonline/l5-swagger": "5.5.*",
         "encore/laravel-admin": "^1.8",
         "fideloper/proxy": "~3.3",
         "google/apiclient": "^2.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "stripe/stripe-php": "^8.8",
-        "weidner/goutte": "^1.6"
+        "weidner/goutte": "^1.6",
+        "zircote/swagger-php": "^2.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
