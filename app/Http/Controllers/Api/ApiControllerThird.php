@@ -1297,6 +1297,40 @@ DB::table('t_credit')
 
 
 
+    ///
+    public function getToushiShintakuDealHistory()
+    {
+
+        $ary = [];
+        for($i=104; $i<=200; $i++){
+            $result = DB::table('t_toushi_shintaku_deal_history')
+                ->where('relational_id', '=', $i)
+                ->orderBy('order_date')
+                ->get();
+
+            foreach($result as $v){
+                $ary[] = [
+                    'relational_id' => $i,
+                    'order_date' => $v->order_date,
+                    'contract_date' => $v->contract_date,
+                    'receive_date' => $v->receive_date,
+                    'account_kind' => $v->account_kind,
+                    'fund_name' => $v->fund_name,
+                    'deal_kind' => $v->deal_kind,
+                    'order_status' => $v->order_status,
+                    'order_price' => $v->order_price,
+                    'pay_price' => $v->pay_price,
+                    'pay_method' => $v->pay_method,
+                    'course' => $v->course,
+                    'suuryou' => $v->suuryou,
+                    'kijun_price' => $v->kijun_price
+                ];
+            }
+        }
+
+        $response = $ary;
+        return response()->json(['data' => $response]);
+    }
 
 
 

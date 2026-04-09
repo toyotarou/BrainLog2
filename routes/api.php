@@ -128,6 +128,7 @@ Route::namespace('Api')->group(function () {
     Route::post('updateToushiShintakuRelationalId', 'ApiControllerThird@updateToushiShintakuRelationalId');
     Route::post('getAmazonData', 'ApiControllerThird@getAmazonData');
     Route::post('getAllMoneySum', 'ApiControllerThird@getAllMoneySum');
+    Route::post('getToushiShintakuDealHistory', 'ApiControllerThird@getToushiShintakuDealHistory');
 
     //money // riverpod
     Route::post('creditCompanySearch', 'ApiController@creditCompanySearch');
