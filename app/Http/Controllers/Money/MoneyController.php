@@ -3213,7 +3213,10 @@ $relationalId[$v->fundname] = $v->relational_id;
                 $fundname = strtr(trim($ex_v[0]), ['\r' => '', '\n' => '']);;
                 $insert[$k]['fundname'] = $fundname;
 
-                $insert[$k]['relational_id'] = $relationalId[$fundname];
+$insert[$k]['relational_id'] = "";
+if(isset($relationalId[$fundname])){
+$insert[$k]['relational_id'] = $relationalId[$fundname];
+}
 
                 $insert[$k]['base_price'] = strtr(trim($ex_v[1]), [',' => '', '円' => '']);
                 $insert[$k]['compare_front'] = strtr(trim($ex_v[2]), ['\r' => '', '\n' => '']);
@@ -3770,8 +3773,10 @@ $relationalId[$v->fundname] = $v->relational_id;
                 $v['day'] = $day;
                 $v['time'] = date("H");
 
+if(isset($relationalId[$v['name']])){
 $relCount = count($relationalId[$v['name']]);
 $v['relational_id'] = ($relCount==1) ? $relationalId[$v['name']][0] : "";
+}
 
                 echo "<pre>";
                 print_r($v);

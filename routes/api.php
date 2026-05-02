@@ -232,6 +232,8 @@ Route::namespace('Api')->group(function () {
     Route::post('insertGeoloc', 'ApiControllerSecond@insertGeoloc');
     Route::post('getGeoloc', 'ApiControllerSecond@getGeoloc');
     Route::post('getAllGeoloc', 'ApiControllerSecond@getAllGeoloc');
+    Route::post('getGeolocReflection', 'ApiControllerReflection@getGeoloc');
+    Route::post('insertUserGeoloc', 'ApiControllerThird@insertUserGeoloc');
 
     //art
     Route::post('getNearArtFacilities', 'ApiControllerSecond@getNearArtFacilities');
@@ -287,14 +289,5 @@ Route::namespace('Api')->group(function () {
 
     ///
     Route::post('getMetroStampPokePoke', 'ApiControllerThird@getMetroStampPokePoke');
-
-
-
-
-
-
-
-
-    Route::post('getGeolocReflection', 'ApiControllerReflection@getGeoloc');
 
 });
