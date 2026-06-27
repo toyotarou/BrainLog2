@@ -12,6 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'line/webhook',       // スラッシュなし
+        '/line/webhook',      // スラッシュあり
+        'BrainLog/line/webhook',  // フルパス
     ];
 }

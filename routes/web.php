@@ -206,3 +206,8 @@ Route::get('/url/index', 'Url\UrlController@index');
 
 //[moneyHistoryDisplay]
 Route::get('/moneyhistory/moneyHistoryDisplay', 'MoneyHistory\MoneyHistoryController@moneyHistoryDisplay');
+
+
+
+
+Route::post('/line/webhook', 'Test\LineWebhookController@webhook');
